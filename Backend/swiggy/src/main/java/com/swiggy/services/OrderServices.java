@@ -59,11 +59,21 @@ public class OrderServices implements IOrderServices {
 	}
 
 	@Override
-	public List<Orders> getOrders() {
-		Pageable pageable = PageRequest.of(0, 5, Sort.by("orderId"));
-		List<Orders> orders = orderRepository.findAll(pageable).getContent();
-		if (orders.isEmpty())
-			throw new SwiggyException("No order found in database");
-		return orders;
+	public List<Orders> getOrders(Integer page, Integer limit, String sortBy) {
+		if (page != null && page == 0)
+			throw new SwiggyException("Page index must not be zero");
+		if (sortBy != null && !sortBy.equals("orderId") && !sortBy.equals("totalAmount"))
+			throw new SwiggyException("please pass correct sorting criteria");
+		if (page != null && limit != null) {
+			Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(sortBy));
+			return orderRepository.findAll(pageable).getContent();
+		} else {
+			return orderRepository.findAll();
+		}
+	}
+
+	@Override
+	public Orders getOrderById(Integer orderId) {
+		return orderRepository.findById(orderId).orElseThrow(()-> new SwiggyException("can't find any order with id " + orderId));
 	}
 }

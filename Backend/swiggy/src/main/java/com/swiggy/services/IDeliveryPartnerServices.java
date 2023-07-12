@@ -5,7 +5,7 @@ import java.util.List;
 import com.swiggy.model.DeliveryPartner;
 
 public interface IDeliveryPartnerServices {
-	List<DeliveryPartner> getAllDeliveryPartners();
+	List<DeliveryPartner> getAllDeliveryPartners(Integer page, Integer limit, String sortBy);
 
 	DeliveryPartner getDeliveryPartnerById(int deliveryPartnerId);
 

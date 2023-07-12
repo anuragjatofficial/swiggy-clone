@@ -7,6 +7,6 @@ import com.swiggy.model.Restaurant;
 
 public interface IRestaurantServices {
 	Restaurant addRestaurant(Restaurant restaurant) throws SwiggyException;
-	List<Restaurant> getAllRestaurants();
+	List<Restaurant> getAllRestaurants(Integer page, Integer limit, String sortBy);
 	Restaurant getRestaurantById(int restaurantId);
 }

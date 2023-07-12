@@ -3,6 +3,9 @@ package com.swiggy.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.swiggy.exceptions.SwiggyException;
@@ -14,8 +17,17 @@ public class DeliveryPartnerServices implements IDeliveryPartnerServices{
 	private DeliveryPartnerRepository deliveryPartnerRepository;
 	
 	@Override
-	public List<DeliveryPartner> getAllDeliveryPartners() {
-		return deliveryPartnerRepository.findAll();
+	public List<DeliveryPartner> getAllDeliveryPartners(Integer page, Integer limit, String sortBy) {
+		if (page != null && page == 0)
+			throw new SwiggyException("Page index must not be zero");
+		if (sortBy != null && !sortBy.equals("deliveryPartnerId") && !sortBy.equals("name"))
+			throw new SwiggyException("please pass correct sorting criteria");
+		if (page != null && limit != null) {
+			Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(sortBy));
+			return deliveryPartnerRepository.findAll(pageable).getContent();
+		}else {
+			return deliveryPartnerRepository.findAll();
+		}
 	}
 
 	@Override

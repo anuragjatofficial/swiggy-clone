@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.swiggy.model.DeliveryPartner;
@@ -23,8 +24,8 @@ public class DeliveryPartnerController {
 	private IDeliveryPartnerServices iDeliveryPartnerServices;
 
 	@GetMapping("/deliveryPartners")
-	public ResponseEntity<List<DeliveryPartner>> getAllDeliveryPartners() {
-		return new ResponseEntity<List<DeliveryPartner>>(iDeliveryPartnerServices.getAllDeliveryPartners(), HttpStatus.OK);
+	public ResponseEntity<List<DeliveryPartner>> getAllDeliveryPartners(@RequestParam(required = false) Integer page,@RequestParam(required = false) Integer limit,@RequestParam(required = false) String sortBy) {
+		return new ResponseEntity<List<DeliveryPartner>>(iDeliveryPartnerServices.getAllDeliveryPartners(page,limit,sortBy), HttpStatus.OK);
 	}
 
 	@PostMapping("/deliveryPartners")

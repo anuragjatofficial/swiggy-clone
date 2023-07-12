@@ -1,6 +1,5 @@
 package com.swiggy.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.swiggy.model.Restaurant;
@@ -24,8 +24,8 @@ public class RestaurantController {
 	private IRestaurantServices iRestaurantServices;
 
 	@GetMapping("/restaurants")
-	public ResponseEntity<List<Restaurant>> getAllRestaurants() {
-		return new ResponseEntity<List<Restaurant>>(iRestaurantServices.getAllRestaurants(), HttpStatus.OK);
+	public ResponseEntity<List<Restaurant>> getAllRestaurants(@RequestParam(required = false) Integer page,@RequestParam(required = false) Integer limit,@RequestParam(required = false) String sortBy) {
+		return new ResponseEntity<List<Restaurant>>(iRestaurantServices.getAllRestaurants(page,limit,sortBy), HttpStatus.OK);
 	}
 
 	@GetMapping("/restaurants/{restaurantId}")

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.swiggy.model.Orders;
@@ -39,13 +40,14 @@ public class OrderController {
 	}
 
 	@GetMapping("/orders")
-	public ResponseEntity<List<Orders>> getAllOrders() {
-		return new ResponseEntity<List<Orders>>(iOrderServices.getOrders(), HttpStatus.OK);
+	public ResponseEntity<List<Orders>> getAllOrders(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer limit, @RequestParam(required = false) String sortBy) {
+		return new ResponseEntity<List<Orders>>(iOrderServices.getOrders(page, limit, sortBy), HttpStatus.OK);
 	}
 
-//	@GetMapping("/orders/{orderId}")
-//	public ResponseEntity<Orders> getOrderById(){
-//		return new ResponseEntity<List<Orders>>(iSwiggyServices.getO(),HttpStatus.OK);
-//	}
-	
+	@GetMapping("/orders/{orderId}")
+	public ResponseEntity<Orders> getOrderById(@PathVariable Integer orderId) {
+		return new ResponseEntity<Orders>(iOrderServices.getOrderById(orderId), HttpStatus.OK);
+	}
+
 }
