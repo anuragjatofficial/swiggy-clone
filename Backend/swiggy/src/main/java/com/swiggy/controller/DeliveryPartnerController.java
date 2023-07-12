@@ -1,0 +1,41 @@
+package com.swiggy.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.swiggy.model.DeliveryPartner;
+import com.swiggy.services.IDeliveryPartnerServices;
+import com.swiggy.services.ISwiggyServices;
+
+import jakarta.validation.Valid;
+
+@RestController
+public class DeliveryPartnerController {
+	@Autowired
+	private IDeliveryPartnerServices iDeliveryPartnerServices;
+
+	@GetMapping("/deliveryPartners")
+	public ResponseEntity<List<DeliveryPartner>> getAllDeliveryPartners() {
+		return new ResponseEntity<List<DeliveryPartner>>(iDeliveryPartnerServices.getAllDeliveryPartners(), HttpStatus.OK);
+	}
+
+	@PostMapping("/deliveryPartners")
+	public ResponseEntity<DeliveryPartner> addDeliveryPartner(@Valid @RequestBody DeliveryPartner deliveryPartner) {
+		return new ResponseEntity<DeliveryPartner>(iDeliveryPartnerServices.addDeliveryPartner(deliveryPartner),
+				HttpStatus.CREATED);
+	}
+
+	@GetMapping("/deliveryPartners/{deliveryPartnerId}")
+	public ResponseEntity<DeliveryPartner> getDeliveryPartnerById(@PathVariable int deliveryPartnerId) {
+		return new ResponseEntity<DeliveryPartner>(iDeliveryPartnerServices.getDeliveryPartnerById(deliveryPartnerId),
+				HttpStatus.OK);
+	}
+}
