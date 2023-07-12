@@ -1,0 +1,82 @@
+
+
+.mynav {
+  width: 50%;
+  user-select: none !important;
+  margin-left: auto;
+}
+
+.mynav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  list-style: none;
+}
+.mynav ul li{
+  padding: 5px 20px;
+  user-select: none;
+}
+.mynav ul li a{
+  text-decoration: dashed;
+  color: black;
+}
+.mynav ul li:hover{
+  background-color: coral;
+  .myAnchor{
+    color: #ffff;
+  }
+  align-items: center;
+  border-radius: 15px;
+}
+
+button{
+  margin-left: 10px;
+  padding: 12px 40px;
+  border: none;
+  color: #f3f3f3f3;
+  background-color: #11a2b8ff;
+  border-radius: 5px;
+}
+
+button:hover{
+  background-color: transparent;
+  color: #11a2b8ff;
+  border: 2px solid #11a2b8ff;
+}
+
+.card{
+  display: inline-flex;
+  border: 5px solid #808088;
+  border-radius: 8px;
+  width: 80vw;
+  align-items: center;
+  filter: drop-shadow(36px 33px 3px grey);
+  /* margin: auto; */
+
+}
+
+.card img{
+  width: 100%;
+  padding: 10px;
+  /* width: fit-content; */
+  border-radius: 20px;
+}
+
+.card div :nth-child(1){
+  /* width: max-content; */
+  display: flex;
+  /* ; */
+}
+
+.card div :nth-child(2){
+  /* width: 40%; */
+  /* padding-left: 30px !important; */
+  margin-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+} 
+.card div h2{
+ margin-left: 20px;
+}

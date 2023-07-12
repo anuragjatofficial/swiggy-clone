@@ -64,8 +64,11 @@ public class OrderServices implements IOrderServices {
 			throw new SwiggyException("Page index must not be zero");
 		if (sortBy != null && !sortBy.equals("orderId") && !sortBy.equals("totalAmount"))
 			throw new SwiggyException("please pass correct sorting criteria");
-		if (page != null && limit != null) {
+		if (page != null && limit != null && sortBy != null) {
 			Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(sortBy));
+			return orderRepository.findAll(pageable).getContent();
+		} else if (page != null && limit != null) {
+			Pageable pageable = PageRequest.of(page - 1, limit);
 			return orderRepository.findAll(pageable).getContent();
 		} else {
 			return orderRepository.findAll();
@@ -74,6 +77,7 @@ public class OrderServices implements IOrderServices {
 
 	@Override
 	public Orders getOrderById(Integer orderId) {
-		return orderRepository.findById(orderId).orElseThrow(()-> new SwiggyException("can't find any order with id " + orderId));
+		return orderRepository.findById(orderId)
+				.orElseThrow(() -> new SwiggyException("can't find any order with id " + orderId));
 	}
 }

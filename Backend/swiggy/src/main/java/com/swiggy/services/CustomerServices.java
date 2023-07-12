@@ -45,10 +45,13 @@ public class CustomerServices implements ICustomerServices {
 			throw new SwiggyException("Page index must not be zero");
 		if (sortBy != null && !sortBy.equals("customerId") && !sortBy.equals("name"))
 			throw new SwiggyException("please pass correct sorting criteria");
-		if (page != null && limit != null) {
+		if (page != null && limit != null && sortBy != null) {
 			Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(sortBy));
 			return customerRepostitory.findAll(pageable).getContent();
-		} else {
+		} else if(page != null && limit != null){
+			Pageable pageable = PageRequest.of(page - 1, limit);
+			return customerRepostitory.findAll(pageable).getContent();
+		}else {
 			return customerRepostitory.findAll();
 		}
 	}
