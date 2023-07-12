@@ -20,12 +20,12 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long customerId;
+	private Integer customerId;
 	
 	@NotBlank(message = "name can't be nul")
 	private String name;
 	
-	 @Email(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$" , message = "email should be in a proper format i.e example@domain.com")
+	@Email(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$" , message = "email should be in a proper format i.e example@domain.com")
 	@NotBlank
 	private String email;
 	

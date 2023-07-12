@@ -21,10 +21,10 @@ public class CustomerServices implements ICustomerServices {
 	public Customer addCustomer(Customer customer) throws SwiggyException {
 		if (customer == null)
 			throw new SwiggyException("customer value can't be null");
-//		if(customer.getCustomerId()!=null) {
-//		 if (customerRepostitory.existsById(customer.getCustomerId()))
-//			throw new SwiggyException("Customer already present in database ");
-//		}
+		if (customer.getCustomerId() != null) {
+			if (customerRepostitory.existsById(customer.getCustomerId()))
+				throw new SwiggyException("Customer already present in database ");
+		}
 		return customerRepostitory.save(customer);
 	}
 

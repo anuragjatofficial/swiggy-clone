@@ -22,7 +22,9 @@ public class DeliveryPartner {
 	@NotNull
 	@NotBlank
 	private String mobileNumber;
+	@NotBlank(message = "name can't be blank")
 	private String name;
+	@NotBlank(message = "address can't be blank")
 	private String address;
 	@JsonIgnore
 	@OneToMany(mappedBy = "deliveryPartner")
