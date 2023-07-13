@@ -1,6 +1,6 @@
 import { useState } from 'react';
-
-// count button using react
+import logo from './images/logo.png';
+import SearchIcon from '@material-ui/icons/Search';
 
 function MyButton() {
     const [count, setcount] = useState(0);
@@ -16,18 +16,23 @@ function NavBar() {
         <>
             <div className='mynav'>
                 <nav>
-                    <ul>
+                    <div className='logodiv'>
+                        <img className='logo' src={logo}/>
+                    </div>
+                    <div className='search'>
+                        <input type='text' placeholder='search with order id'/>
+                        <div>
+                            <SearchIcon style={{ fontSize: 32 }} />
+                        </div>
+                    </div>
+                    {/* <div>
+                    </div> */}
+                    <ul> 
                         <li>
-                            <a href='#home' className='myAnchor'>Home</a>
+                            <a href='#home' className='myAnchor'>Restaurants</a>
                         </li>
                         <li>
-                            <a href='#home' className='myAnchor'>Contact</a>
-                        </li>
-                        <li>
-                            <a href='#home' className='myAnchor'>About</a>
-                        </li>
-                        <li>
-                            <a href='#home' className='myAnchor'>Help</a>
+                            <a href='#home' className='myAnchor'>Customers</a>
                         </li>
                     </ul>
                 </nav>

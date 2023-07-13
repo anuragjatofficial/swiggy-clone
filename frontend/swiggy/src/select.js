@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import Select from 'react-select';
-
+import Select from 'react-select'
 function SelectTag() {
     const [value, setValue] = useState(null);
     const options = [
