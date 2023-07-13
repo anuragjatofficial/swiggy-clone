@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import logo from './images/logo.png';
 import SearchIcon from '@material-ui/icons/Search';
-
+import React, { useEffect } from 'react';
 function MyButton() {
     const [count, setcount] = useState(0);
     function handleClick() {
@@ -12,6 +12,20 @@ function MyButton() {
 }
 // navbar using react
 function NavBar() {
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.ctrlKey && event.code === 'Space') {
+                event.preventDefault();
+                document.getElementById('search-box').focus();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
     return (
         <>
             <div className='mynav'>
@@ -20,7 +34,7 @@ function NavBar() {
                         <img className='logo' src={logo}/>
                     </div>
                     <div className='search'>
-                        <input type='text' placeholder='search with order id'/>
+                        <input type='text' id='search-box' placeholder='search with order id'/>
                         <div>
                             <SearchIcon style={{ fontSize: 32 }} />
                         </div>
