@@ -1,8 +1,11 @@
 package com.swiggy.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +23,9 @@ public class Orders {
 	@NotEmpty(message="please add atleast one item")
 	private List<String> items;
 	private double totalAmount;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
+	private LocalDateTime orderDateAndTime;
 	@ManyToOne
 	private Customer customer;
 	@ManyToOne

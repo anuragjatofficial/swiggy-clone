@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.swiggy.exceptions.SwiggyException;
 import com.swiggy.model.Customer;
 import com.swiggy.model.DeliveryPartner;
+import com.swiggy.model.OrderStatus;
 import com.swiggy.model.Orders;
 import com.swiggy.model.Restaurant;
 import com.swiggy.repository.CustomerRepostitory;
@@ -37,8 +38,9 @@ public class OrderServices implements IOrderServices {
 
 		Orders order = orderRepository.findById(orderId)
 				.orElseThrow(() -> new SwiggyException("can't find any order with id " + deliveryPartnerId));
-
+		
 		order.setDeliveryPartner(deliveryParnter);
+		order.setOrderStatus(OrderStatus.ASSIGNED);
 		return orderRepository.save(order);
 	}
 

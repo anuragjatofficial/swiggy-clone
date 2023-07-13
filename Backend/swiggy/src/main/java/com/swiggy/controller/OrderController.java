@@ -1,5 +1,6 @@
 package com.swiggy.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.swiggy.model.OrderStatus;
 import com.swiggy.model.Orders;
 import com.swiggy.services.IOrderServices;
 import jakarta.validation.Valid;
@@ -28,6 +30,8 @@ public class OrderController {
 	@PostMapping("/customers/{customerId}/orders/{restaurantId}")
 	public ResponseEntity<Orders> placeOrder(@PathVariable int customerId, @PathVariable int restaurantId,
 			@Valid @RequestBody Orders orders) {
+		orders.setOrderStatus(OrderStatus.CONFIRMED);
+		orders.setOrderDateAndTime(LocalDateTime.now());
 		return new ResponseEntity<Orders>(iOrderServices.placeOrder(orders, customerId, restaurantId),
 				HttpStatus.CREATED);
 	}
