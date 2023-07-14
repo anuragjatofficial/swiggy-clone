@@ -39,13 +39,15 @@ function fetchData(num){
     .then(res=>res.json())
     .then(res=>{
         console.log(res);
-        displayOrderData(res);
+        saveOrder(res);
     })
     .catch((err)=>{
         console.log(err);
     })
 }
 
-function displayOrderData(res){
-    return ``;
+function saveOrder(res){
+    // setItem(keyName, keyValue)
+    localStorage.setItem("order",JSON.stringify(res));
+    window.location.replace("./test.html")
 }

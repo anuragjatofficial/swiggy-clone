@@ -64,9 +64,14 @@
     transform: rotate(90deg);
 }
 
+.logo-text{
+    margin-left: 20px;
+}
+
 .mynav nav .logodiv {
     display: flex;
     margin-left: 60px;
+    align-items: center;
 }
 
 .mynav .search {
@@ -133,7 +138,7 @@ main {
 
 /* css for order progresss */
 
-main>div:nth-child(2) {
+main>div>div>div:nth-child(2) {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -154,6 +159,15 @@ main>div:nth-child(2) {
     padding-bottom: 2px;
     padding-left: 7px;
     padding-right: 7px;
+}
+
+#overview>h1{
+    margin-top: 20px;
+    margin-left:70px;
+}
+#overview>span{
+    margin-left: 70px;
+    margin-top: 10px;
 }
 
 #food-items{
