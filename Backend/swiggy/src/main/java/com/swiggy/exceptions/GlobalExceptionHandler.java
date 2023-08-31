@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import lombok.extern.slf4j.Slf4j;
+
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(SwiggyException.class)
 	public ResponseEntity<ErrorDetails> swiggyExceptionHandler(SwiggyException sw, WebRequest we) {
+		log.error("swiggy exception happend");
 		return new ResponseEntity<ErrorDetails>(
 				new ErrorDetails(sw.getMessage(), LocalDateTime.now(), we.getDescription(false)),
 				HttpStatus.BAD_REQUEST);

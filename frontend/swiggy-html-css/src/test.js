@@ -1,7 +1,5 @@
 let data = null;
 
-
-
 window.addEventListener("load",()=>{
     data = JSON.parse(localStorage.getItem("order"));
     Display(data);

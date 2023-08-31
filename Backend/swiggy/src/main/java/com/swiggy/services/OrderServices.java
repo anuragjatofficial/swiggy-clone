@@ -38,7 +38,7 @@ public class OrderServices implements IOrderServices {
 
 		Orders order = orderRepository.findById(orderId)
 				.orElseThrow(() -> new SwiggyException("can't find any order with id " + deliveryPartnerId));
-		
+
 		order.setDeliveryPartner(deliveryParnter);
 		order.setOrderStatus(OrderStatus.ASSIGNED);
 		return orderRepository.save(order);

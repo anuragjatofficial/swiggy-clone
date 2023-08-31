@@ -1,60 +1,58 @@
 package com.swiggy.utils;
 
-import java.util.Arrays;
-import java.util.Collections;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationConverter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.swiggy.repository.UserRepository;
 
 @Configuration
 public class AppConfig {
 
-	@Bean
-	public SecurityFilterChain configuration(HttpSecurity http) throws Exception {
-
-		http.sessionManagement(se -> se.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.cors(cors -> {
-
-			cors.configurationSource(new CorsConfigurationSource() {
-
-				@Override
-				public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-					CorsConfiguration cfg = new CorsConfiguration();
-
-					cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-					cfg.setAllowedMethods(Collections.singletonList("*"));
-					cfg.setAllowCredentials(true);
-					cfg.setAllowedHeaders(Collections.singletonList("*"));
-					cfg.setExposedHeaders(Arrays.asList("Authorization"));
-					return cfg;
-				}
-			});
-		}).authorizeHttpRequests(
-				auth -> auth.requestMatchers(HttpMethod.POST, "customers").permitAll().anyRequest().authenticated())
-				.csrf(csrf -> csrf.disable())
-				.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-				.addFilterBefore(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-				.formLogin(Customizer.withDefaults()).httpBasic(Customizer.withDefaults());
-		return http.build();
-
-	}
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
+	@Bean
+	public UserDetailsService userDetailsService () {
+		return username -> 
+				userRepository
+				.findByUsername(username)
+				.orElseThrow(
+						()-> 
+					new UsernameNotFoundException(
+							"can't find any user with username "+username
+					)
+				);
+	}
+	
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration
+				.getAuthenticationManager();
+	}
+	
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider
+		.setUserDetailsService(userDetailsService());
+		
+		authProvider
+		.setPasswordEncoder(passwordEncoder());
+		
+		return authProvider;
+	}
 }

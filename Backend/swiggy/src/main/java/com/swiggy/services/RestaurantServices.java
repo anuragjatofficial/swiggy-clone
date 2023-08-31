@@ -26,10 +26,10 @@ public class RestaurantServices implements IRestaurantServices {
 		if (page != null && limit != null && sortBy != null) {
 			Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(sortBy));
 			return restaurantRepository.findAll(pageable).getContent();
-		} else if(page != null && limit != null){
+		} else if (page != null && limit != null) {
 			Pageable pageable = PageRequest.of(page - 1, limit);
 			return restaurantRepository.findAll(pageable).getContent();
-		}else {
+		} else {
 			return restaurantRepository.findAll();
 		}
 	}

@@ -131,7 +131,7 @@ main {
 }
 
 .shortcut kbd {
-    background-color: rgba(202, 151, 132, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     padding: 7px;
 }
