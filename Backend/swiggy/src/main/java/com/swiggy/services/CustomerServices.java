@@ -44,8 +44,8 @@ public class CustomerServices implements ICustomerServices {
 		// registerCustomer
 		if (customer == null)
 			throw new SwiggyException("customer value can't be null");
-		if (customer.getCustomerId() != null) {
-			if (customerRepostitory.existsById(customer.getCustomerId()))
+		if (customer.getUserId() != null) {
+			if (customerRepostitory.existsById(customer.getUserId()))
 				throw new SwiggyException("Customer already present in database ");
 		}
 		log.info("customer added");
@@ -64,9 +64,9 @@ public class CustomerServices implements ICustomerServices {
 	}
 
 	@Override
-	public Customer getCustomerById(int customerId) {
-		return customerRepostitory.findById(customerId)
-				.orElseThrow(() -> new SwiggyException("can't find any customer with id " + customerId));
+	public Customer getCustomerById(int userId) {
+		return customerRepostitory.findById(userId)
+				.orElseThrow(() -> new SwiggyException("can't find any customer with id " + userId));
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class CustomerServices implements ICustomerServices {
 		if (page != null && page == 0)
 			throw new SwiggyException("Page index must not be zero");
 		
-		if (sortBy != null && !sortBy.equals("customerId") && !sortBy.equals("name"))
+		if (sortBy != null && !sortBy.equals("userId") && !sortBy.equals("name"))
 			throw new SwiggyException("please pass correct sorting criteria");
 		
 		if (page != null && limit != null && sortBy != null) {

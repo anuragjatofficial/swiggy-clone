@@ -23,9 +23,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer extends User {
-
-	@Column(unique = true)
-	private Integer customerId = getUserId();
 	@NotBlank(message = "name can't be empty or null")
 	private String name;
 
