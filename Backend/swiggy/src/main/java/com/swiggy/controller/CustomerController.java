@@ -53,6 +53,7 @@ public class CustomerController {
 	 * [POST] URL -> http://localhost:8080/customers
 	 * 
 	 * Request body 
+	 * 
 	 * { 
 	 * 	"username":"johndoe_12",
 	 *  "password":"jane_1233",

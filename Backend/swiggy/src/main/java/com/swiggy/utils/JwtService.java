@@ -54,6 +54,7 @@ public class JwtService {
 
 	public Key getSiginKey() {
 		byte[] keyByte = Decoders.BASE64.decode(SecurityDetails.JWT_KEY);
+		System.out.println(Keys.hmacShaKeyFor(keyByte));
 		return Keys.hmacShaKeyFor(keyByte);
 	}
 	
@@ -74,7 +75,7 @@ public class JwtService {
 				.setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis()+ 1000*60*24))
-				.signWith(getSiginKey(),SignatureAlgorithm.HS384)
+				.signWith(getSiginKey(),SignatureAlgorithm.HS256)
 				.compact();
 	}
 	
